@@ -149,5 +149,70 @@ where:
 - For long-channel MOSFETs, λ≈0 → current almost flat​.
 - For short-channel devices, 𝜆 is significant.
 
+# Part 3: Introduction to SPICE
+### <ins>Key Learnings:
+- SPICE Waveforms: Can be used to calculate the delay of a cell. These delays are very close to real/practical delays.
+- SPICE Model Parameters: Define device behavior and process variations.
+- SPICE Simulation Flow: Provides a systematic approach from writing netlists → running simulations → analyzing results.
 
+### <ins>SPICE setup
+### 1. Netlist for NMOS
+A simple NMOS device shown in Figure 2 was simulated using SPICE.
 
+![WhatsApp Image 2025-08-25 at 23 46 47_2c04e9d6](https://github.com/user-attachments/assets/f3d42c49-f531-4a6f-9e9c-3fe2f644d8f1)
+
+Figure 2: Structure of a simple NMOS device.
+code.............................
+
+<pre> spice 
+  
+ *Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=5 l=2
+R1 n1 in 55
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vdd 0 1.8 0.1 Vin 0 1.8 0.2
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end </pre>
+
+Notes:
+- XM1: Defines the NMOS transistor with width 𝑊=5, length 𝐿=2.
+- R1: Added to avoid directly feeding input current into the gate.
+- Vdd and Vin: Define supply and input voltages.
+
+### 2. SPICE Simulation Flow
+- Write netlist → describe circuit elements.
+- Include model libraries → here, SkyWater sky130_fd_pr.
+- Set process corner → e.g., tt, ff, ss, sf, fs.
+
+  - Example: <pre> ```spice .lib "sky130_fd_pr/models/sky130.lib.spice" tt ``` </pre>
+  - Changing tt → ff or ss changes the process variation.
+
+- Run commands (.op, .dc, .tran, etc.) to simulate.
+- Observe waveforms & results in ngspice GUI or terminal.
+
+### Lab Activity – Day 1
+- The tt (typical corner) was used.
+- The .dc analysis swept Vdd and Vin to observe NMOS current behavior.
+- Output observation: By clicking on the curve in the SPICE GUI, the drain current (𝐼𝐷) can be read directly from y0 in the terminal output.
+- Nodes in SPICE are defined by connection points in the netlist.
+- Different process corners influence device behavior significantly.
+- Practical transistor characteristics can be observed directly from simulation curves.
