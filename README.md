@@ -33,3 +33,26 @@ This five-day workshop was designed to give a complete understanding of transist
 - [References](#references)  
 
 # Day 1: Basics of NMOS Drain Current (Id) vs Drain-Source Voltage (Vds)
+On the first day of the workshop, we were introduced to the fundamentals of MOSFET, its operartions and how to use SPICE for the circuit simulations. We began the session by revising the structure of an NMOS, its four terminals (Gate, Source, Drain and Body) and how different biasing conditions affect its operation. The concept of threshold voltage (Vt), stromg inversion and body effects were explained in detail, followed by derivations governing these parameters. Alongside theory, the basics of writing SPICE netlists and running simulations were also demonstrated.
+
+# Part 1: Introduction to Circuit Design and SPICE simulations
+### <ins>Key Learnings:
+- Importance of (W/L) ratios in MOSFETs design.
+- Need for SPICE simulations in circuit analysis.
+- Structure and operation of NMOS transistor:
+  - Four terminals → Gate (G), Source (S), Drain (D), Bulk/Body (B)
+  - P-substrate with n+ diffusion regions
+  - SiO₂ isolation layer, gate oxide, and poly-silicon/metal gate.
+
+![WhatsApp Image 2025-08-25 at 20 22 15_f5cabf9f](https://github.com/user-attachments/assets/c57c4773-ccfa-449d-a51d-4cdd2aadb4f7)
+
+- Threshold Voltage (Vt):
+The gate-to-source voltage (Vgs) at which strong inversion occurs.
+- Strong Inversion:
+When a part of the P-substrate inverts to form an N-type channel.
+- Body Effect:
+Applying a substrate bias (Vsb) increases the required threshold voltage.
+- Threshold Voltage Equation:
+  
+  <img width="453" height="66" alt="image" src="https://github.com/user-attachments/assets/8b25ca41-d06e-40c2-b871-0faf19c692c7" />
+
