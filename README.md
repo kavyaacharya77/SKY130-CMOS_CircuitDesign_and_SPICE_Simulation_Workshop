@@ -63,7 +63,27 @@ where:
 - 𝜙𝑓 = Fermi potential
 - *VSB* = Source-to-bulk voltage
 
-- Body Effect:
+- Body Effect Coefficient
   
   <img width="189" height="83" alt="image" src="https://github.com/user-attachments/assets/98330f1e-d733-4986-a250-b3f414f68fde" />
+
+where:
+- 𝜀𝑠𝑖​ = Permittivity of silicon (=11.7ε0)
+- 𝑁𝐴 = Substrate doping concentration
+- *q* = Electronic charge (1.6×10^−19 𝐶)
+- 𝐶𝑜𝑥 = Oxide capacitance per unit area
+
+- Fermi Potential Equation
+
+<img width="242" height="47" alt="image" src="https://github.com/user-attachments/assets/b84ae6d3-4ebb-4b84-ae28-cb574b328352" />
+
+where:
+- 𝑘 = Boltzmann constant
+- 𝑇 = Absolute temperature (K)
+- 𝑛𝑖 = Intrinsic carrier concentration of silicon
+
+# Part 2: NMOS Resistive region and Saturation region of operation
+### <ins>Key Learnings:
+
+
 
