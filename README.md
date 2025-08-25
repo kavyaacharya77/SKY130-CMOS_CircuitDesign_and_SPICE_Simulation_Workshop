@@ -44,7 +44,7 @@ On the first day of the workshop, we were introduced to the fundamentals of MOSF
   - P-substrate with n+ diffusion regions
   - SiO₂ isolation layer, gate oxide, and poly-silicon/metal gate.
 
-![WhatsApp Image 2025-08-25 at 20 22 15_f5cabf9f](https://github.com/user-attachments/assets/c57c4773-ccfa-449d-a51d-4cdd2aadb4f7)
+![WhatsApp Image 2025-08-25 at 20 55 48_bd066fc7](https://github.com/user-attachments/assets/398530b3-ea47-42ab-8d69-e10cd040fffa)
 
 - Threshold Voltage (Vt):
 The gate-to-source voltage (Vgs) at which strong inversion occurs.
@@ -55,4 +55,15 @@ Applying a substrate bias (Vsb) increases the required threshold voltage.
 - Threshold Voltage Equation:
   
   <img width="453" height="66" alt="image" src="https://github.com/user-attachments/assets/8b25ca41-d06e-40c2-b871-0faf19c692c7" />
+
+where:
+- *VT0* = Threshold voltage when 
+- 𝑉𝑆𝐵=0
+- 𝛾= Body effect coefficient (units: V^0.5)
+- 𝜙𝑓 = Fermi potential
+- *VSB* = Source-to-bulk voltage
+
+- Body Effect:
+  
+  <img width="189" height="83" alt="image" src="https://github.com/user-attachments/assets/98330f1e-d733-4986-a250-b3f414f68fde" />
 
