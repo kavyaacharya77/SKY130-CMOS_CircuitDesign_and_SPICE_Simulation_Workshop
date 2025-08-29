@@ -162,9 +162,8 @@ A simple NMOS device shown in Figure 2 was simulated using SPICE.
 ![WhatsApp Image 2025-08-25 at 23 46 47_2c04e9d6](https://github.com/user-attachments/assets/f3d42c49-f531-4a6f-9e9c-3fe2f644d8f1)
 
 Figure 2: Structure of a simple NMOS device.
-code.............................
 
-```spice
+```
 *Model Description
 .param temp=27
 
@@ -208,8 +207,310 @@ Notes:
 
 ### Lab Activity – Day 1
 - The tt (typical corner) was used.
+- Process corner variation (tt → ff → ss) changes drive current & Vt.
 - The .dc analysis swept Vdd and Vin to observe NMOS current behavior.
 - Output observation: By clicking on the curve in the SPICE GUI, the drain current (𝐼𝐷) can be read directly from y0 in the terminal output.
 - Nodes in SPICE are defined by connection points in the netlist.
 - Different process corners influence device behavior significantly.
 - Practical transistor characteristics can be observed directly from simulation curves.
+
+
+Figure 3: Snapshot of output window of the Day 1 lab activity 
+
+# Day 2: Velocity Saturation and basics of CMOS inverter VTC
+On the second day of the workshop, we explored advanced concepts of MOSFET device physics and their impact on circuit behavior. Through SPICE simulations, we observed the characteristics of long-channel and short-channel devices, focusing on the effect of velocity saturation at different electric fields. In addition, the operation of MOSFETs as switches and the fundamentals of CMOS inverters were introduced, including their voltage transfer characteristics (VTC).
+
+# Part 1: SPICE simulation for lower nodes and velocity saturation effect
+### <ins>Key Learnings:
+- Distribution of different regions of operation of NMOS on the Ids–Vds graph.
+- The cut-off region occurs when 𝑉𝐺𝑆<𝑉𝑇, where the NMOS remains OFF and no channel is formed.
+
+### Velocity saturation effect:
+  - At lower electric fields, carrier velocity is proportional to the field.
+  - Beyond a critical electric field (εc), velocity saturates.
+  - This alters the current equations at short-channel lengths.
+
+### Regions of operation:
+  - Long channel (>250nm): Cut-off, Resistive, Saturation.
+  - Short channel (<250nm): Cut-off, Resistive, Velocity Saturation, Saturation.
+ 
+### Lab Activity
+- A SPICE simulation was carried out using the sky130 PDK to plot Ids vs Vds for short-channel devices.
+- Threshold voltage was extracted from the Ids–Vgs curve by extending the linear portion of the graph and finding the x-intercept.
+
+Figures:
+
+- Figure 7: Regions of NMOS operation
+- Figure 8: Velocity saturation effect graph
+- Figures 9–12: Snapshots of SPICE terminal and plot windows for Ids–Vds and Ids–Vgs
+
+# Part 2: CMOS voltage transfer characteristics (VTC)
+### <ins>Key Learnings:
+MOSFET as a switch:
+
+OFF resistance is infinite when ∣𝑉𝐺𝑆∣<∣𝑉𝑇∣
+ON resistance is finite when ∣𝑉𝐺𝑆∣>∣𝑉𝑇∣
+
+Operation of CMOS inverter:
+
+When 𝑉𝐼𝑁=𝑉𝐷𝐷:
+
+PMOS OFF, NMOS ON → 𝑉𝑂𝑈𝑇=0𝑉
+
+
+When 𝑉𝐼𝑁=0𝑉
+- PMOS ON, NMOS OFF → 𝑉𝑂𝑈𝑇=𝑉𝐷𝐷
+	​
+
+
+Voltage relations for NMOS and PMOS were derived and compared.
+
+Load curves of PMOS and NMOS were superimposed to generate the CMOS inverter transfer characteristics.
+Figures:
+
+Figure 13: CMOS inverter circuit diagram
+
+Figures 14 & 15: Load curves of PMOS and NMOS
+
+Figure 16: Superimposed load curves
+
+Figure 17: Plot of 𝑉𝑂𝑈𝑇vs 𝑉𝐼𝑁
+
+
+# Day 3: CMOS switching threshold and dynamic simulations
+On the third day of the workshop, the focus was on the Voltage Transfer Characteristics (VTC) of the CMOS inverter and how it defines the inverter’s switching behavior. The concept of switching threshold voltage (Vm) was studied, along with how the PMOS and NMOS transistors operate in different regions depending on the applied input voltage. We also learned how the shape of the VTC is influenced by transistor sizing ratios (Wp/Lp vs Wn/Ln), which in turn affects noise margins and the robustness of the inverter design.
+
+# Part 1: Voltage transfer characteristics and SPICE simulations
+### <ins>Key Learnings:
+What was learnt:
+
+A CMOS inverter consists of one NMOS and one PMOS connected in series.
+
+At any given input voltage (Vin), the operating regions of NMOS and PMOS can be identified (cut-off, linear, or saturation).
+
+The Voltage Transfer Characteristic (VTC) curve is obtained by plotting Vout vs Vin.
+
+Key regions of the VTC:
+
+Vin = 0V: NMOS is OFF, PMOS is ON → Vout ≈ Vdd.
+
+Vin = Vdd: NMOS is ON, PMOS is OFF → Vout ≈ 0V.
+
+Vin ≈ Vm (threshold point): Both NMOS and PMOS conduct → inverter switches.
+
+Switching Threshold (Vm):
+
+Defined as the point where NMOS current = PMOS current.
+
+A balanced inverter typically has Vm ≈ Vdd/2.
+
+Vm depends on the sizing ratio (Wp/Lp vs Wn/Ln).
+
+# Part 2: Static Behavior Evaluation - CMOS Inverter Robustness: Switching threshold
+### <ins>Key Learnings:
+part 2: Lab Activity – CMOS Inverter Simulation
+*Model Description
+.param temp=27
+
+*Include SKY130 library
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+XM1 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.42u l=0.15u
+XM2 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1.26u l=0.15u
+
+Vdd vdd 0 1.8V
+Vin in 0 0V
+
+*Simulation commands
+.dc Vin 0 1.8 0.01
+.op
+
+.control
+run
+plot v(out) vs v(in)
+.endc
+
+.end
+
+
+SPICE Netlist for CMOS Inverter VTC:
+Simulation Observations:
+
+- The VTC curve showed three distinct regions:
+  - High Output Region (Vin low, Vout ≈ Vdd).
+  - Transition Region (Vin ≈ Vm, both transistors conducting).
+  - Low Output Region (Vin high, Vout ≈ 0V).
+
+- The sharp transition around Vm indicates strong inverter behavior.
+- By changing the ratio (Wp/Lp) / (Wn/Ln), the Vm shifted, showing how sizing affects symmetry and switching speed.
+
+- Figures
+
+  - Figure 18: CMOS Inverter Circuit.
+  - Figure 19: VTC Curve (Vout vs Vin).
+  - Figure 20: Effect of sizing ratio on VTC.
+
+# Day 4: CMOS Noise Margin Robustness Evaluation 
+On the fourth day of the workshop, the focus was on understanding the robustness of CMOS inverters in terms of noise margins. We studied the concepts of V_OH, V_IH, V_IL, and V_OL, which define the valid logic levels of digital circuits, and learned how these values determine the reliability of an inverter under noisy conditions. The equations for Noise Margin High (NM_H) and Noise Margin Low (NM_L) were derived in terms of these voltage levels, providing a theoretical basis for analyzing circuit stability. 
+
+
+# Part 1: Static Behavior Evaluation - CMOS Inverter Robustness: Noise Margin
+### <ins>Key Learnings:
+VOH (Output High Voltage): Maximum output voltage interpreted as logic HIGH.
+
+VOL (Output Low Voltage): Maximum output voltage interpreted as logic LOW.
+
+VIH (Input High Voltage): Minimum input voltage recognized as logic HIGH.
+
+VIL (Input Low Voltage): Maximum input voltage recognized as logic LOW.
+
+Noise Margins:
+
+Noise Margin High (NMH):𝑁𝑀𝐻=𝑉𝑂𝐻−𝑉𝐼𝐻
+
+
+Noise Margin Low (NML):𝑁𝑀𝐿=𝑉𝐼𝐿−𝑉𝑂𝐿
+
+Importance:
+
+- Larger noise margins → inverter is more immune to disturbances.
+
+- Balanced CMOS inverters (Wp/Lp ≈ 2–3 × Wn/Ln) give nearly equal NMH and NML.
+
+Part 2: Lab Activity – Noise Margin Calculation
+
+SPICE Netlist for Noise Margin Simulation:
+* CMOS Inverter Noise Margin Analysis
+.param temp=27
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+* Transistor sizing
+XM1 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.42u l=0.15u
+XM2 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1.16u l=0.15u   *Wp/Lp = 2.77 * Wn/Ln
+
+* Power supply
+Vdd vdd 0 1.8
+Vin in 0 0
+
+* Simulation command
+.dc Vin 0 1.8 0.01
+.op
+
+.control
+run
+plot v(out) vs v(in)
+.endc
+
+.end
+Simulation Observations:
+
+The VTC curve was plotted and the slopes at transition points gave VIL and VIH.
+
+By extracting values from the plot:
+
+VOH ≈ 1.8 V
+
+VOL ≈ 0 V
+
+VIL ≈ ~0.6 V
+
+VIH ≈ ~1.2 V
+
+Noise Margins obtained:
+
+NMH = VOH – VIH ≈ 0.6 V
+
+NML = VIL – VOL ≈ 0.6 V
+
+This showed that the inverter was robust with balanced noise margins.
+
+Figures
+
+- Figure 21: CMOS Inverter Circuit for Noise Margin Test.
+- Figure 22: VTC Curve with VIL and VIH markings.
+- Figure 23: Noise Margin High (NMH) and Noise Margin Low (NML) representation.
+
+# Day 5: CMOS Power supply and device variation robustness evaluation 
+On the final day of the workshop, we explored how supply voltage variations and manufacturing processes like etching and oxide thickness influence CMOS device performance. We studied the differences between strong and weak transistors (PMOS and NMOS) and observed how inverter behavior changes when moving from Weak PMOS–Strong NMOS to Strong PMOS–Weak NMOS. These experiments helped us understand the practical challenges of circuit design, such as gain variation, device mismatch, and the trade-offs between speed, power, and stability.
+
+# Part 1: Static Behavior Evaluation - CMOS Inverter Robustness: Power Supply Variation
+### <ins>Key Learnings:
+The supply voltage (VDD) directly affects the Voltage Transfer Characteristic (VTC) of a CMOS inverter.
+
+Increasing VDD:
+- Makes the transition slope steeper (higher gain).
+- Improves Noise Margins (NMH and NML).
+- Leads to faster switching but higher dynamic and static power consumption.
+
+Decreasing VDD:
+- Makes the transition slope gentler.
+- Reduces Noise Margins.
+- Saves power but increases delay and reduces robustness.
+
+Lab Activity:
+- A CMOS inverter was simulated with VDD varied from 1.0 V to 2.0 V in steps.
+- For each value of VDD, the inverter VTC was plotted.
+- VOH, VOL, VIH, and VIL were extracted and Noise Margins calculated.
+
+Observations:
+- At VDD = 2.0 V, the inverter showed strong robustness with large noise margins and a sharp transition.
+- At VDD = 1.0 V, the inverter’s transition was smoother, noise margins shrank, and the circuit became more sensitive to noise.
+- Thus, a trade-off exists between power efficiency and robustness.
+
+# Part 2: Static Behavior Evaluation - CMOS Inverter Robustness: Device Variation
+### <ins>Key Learnings:
+- In real fabrication, device parameters are never perfectly ideal.
+- Variations arise due to:
+  - Oxide thickness (tox): Affects threshold voltage (Vth).
+  - Etching process errors: Change transistor width/length (W/L).
+  - Doping variations: Alter mobility and drive current.
+
+- Strong vs Weak Devices:
+  - Strong NMOS / Weak PMOSSwitching threshold (Vm) shifts downward (closer to GND).
+  - Output falls faster than it rises.
+  - Noise margin high (NMH) reduces, but NML improves.
+    
+- Strong PMOS / Weak NMOS
+  - Switching threshold (Vm) shifts upward (closer to VDD).
+  - Output rises faster than it falls.
+  - Noise margin low (NML) reduces, but NMH improves.
+  
+- Balanced Case (Wp/Lp ≈ 2.5 × Wn/Ln)
+  - Switching threshold Vm ≈ VDD/2.
+  - Both rise and fall times are symmetric.
+  - Provides maximum robustness against noise.
+
+Lab Activity:
+
+- CMOS inverters were simulated with three different device strength configurations:
+  - Strong NMOS / Weak PMOS
+  - Strong PMOS / Weak NMOS
+  - Balanced PMOS and NMOS
+- VTC curves were compared to analyze the effect of strength imbalance.
+
+Observations:
+
+- When NMOS was stronger, the inverter output pulled down quickly, but high-level noise immunity reduced.
+- When PMOS was stronger, the inverter pulled up quickly, but low-level noise immunity reduced.
+- Balanced sizing provided the best trade-off with a stable Vm ≈ VDD/2 and symmetric noise margins.
+
+Figures
+- Figure 24: VTC curves for CMOS inverter at different VDD values.
+- Figure 25: VTC of inverter with Strong NMOS / Weak PMOS.
+- Figure 26: VTC of inverter with Strong PMOS / Weak NMOS.
+- Figure 27: Comparative plot showing the effect of strength imbalance.
+
+# Conclusion
+During the course of this workshop, I was able to gain a deeper understanding of MOSFET operation and CMOS inverter design. I explored how the characteristics of an inverter can be modified through device sizing, power supply variation, and transistor strength adjustments. I also learned to create and analyze SPICE decks from netlists, and perform simulations that closely reflect real-world circuit behavior.
+
+The study of CMOS voltage transfer characteristics and the factors influencing them gave me practical insights into circuit design trade-offs. Additionally, learning about static behavior evaluation — including noise margins, power supply variations, and device robustness — helped me appreciate the importance of reliability in VLSI design.
+
+The hands-on lab activities were especially valuable, as the plots and simulation outputs encouraged me to think critically about parameter variations and their effects. Overall, this workshop has ignited my interest in MOSFETs and CMOS design, motivating me to further master the fundamentals of VLSI and system-level design. My experience with this workshop was truly enriching, and the guidance provided made the entire learning process smooth and impactful.
+
+# Reference
+- Skywater Technology Foundry, SKY130 PDK Documentation – https://skywater-pdk.readthedocs.io
+- Sedra & Smith, Microelectronic Circuits, Oxford University Press.
+- Rabaey, Chandrakasan & Nikolic, Digital Integrated Circuits: A Design Perspective, Pearson Education.
+- Workshop GitHub Repository: VrushabhDamle, sky130CircuitDesignWorkshop (Archived, 2022).
+- Ngspice Official Documentation – http://ngspice.sourceforge.net/docs.html
