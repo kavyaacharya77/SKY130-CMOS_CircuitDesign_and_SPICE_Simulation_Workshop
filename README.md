@@ -214,8 +214,11 @@ Notes:
 - Different process corners influence device behavior significantly.
 - Practical transistor characteristics can be observed directly from simulation curves.
 
+<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/53867093-2ac4-4701-9fc7-4d7aef87020f" />
 
 Figure 3: Snapshot of output window of the Day 1 lab activity 
+
+To check the value of 𝐼𝑑 at any point on the curve, left-click on the desired point. The terminal window will display values of 𝑥0 and 𝑦0, where 𝑦0 represents the drain current 𝐼𝑑 in amperes.
 
 # Day 2: Velocity Saturation and basics of CMOS inverter VTC
 On the second day of the workshop, we explored advanced concepts of MOSFET device physics and their impact on circuit behavior. Through SPICE simulations, we observed the characteristics of long-channel and short-channel devices, focusing on the effect of velocity saturation at different electric fields. In addition, the operation of MOSFETs as switches and the fundamentals of CMOS inverters were introduced, including their voltage transfer characteristics (VTC).
@@ -265,13 +268,14 @@ setplot dc1
 
 .end
 ```
-- Threshold voltage was extracted from the Ids–Vgs curve by extending the linear portion of the graph and finding the x-intercept.
 
-Figures:
+<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/54f61217-eb9a-4972-9413-5a02f4759eee" />
 
-- Figure 7: Regions of NMOS operation
-- Figure 8: Velocity saturation effect graph
-- Figures 9–12: Snapshots of SPICE terminal and plot windows for Ids–Vds and Ids–Vgs
+Figure 4: Snapshot of plot window for Ids Vs Vds of short channel device
+
+<img width="799" height="491" alt="image" src="https://github.com/user-attachments/assets/56cf74e1-f9e7-4e26-a1b0-94c81e165e35" />
+
+Figure 5: Velocity saturation effect graph
 
 To calculate the threshold voltage from *IDS VS VGS* curve, the SPICE code shown below is used.
 ```
@@ -303,12 +307,40 @@ setplot dc1
 .end
 ```
 
+<img width="1920" height="1028" alt="image" src="https://github.com/user-attachments/assets/3c259e3d-17f3-4e49-aa3f-96041f35e544" />
+
+Figure 6: Snapshot of plot window showing Ids vs Vgs curve
+
+- Threshold voltage was extracted from the Ids–Vgs curve by extending the linear portion of the graph and finding the x-intercept.
+
 # Part 2: CMOS voltage transfer characteristics (VTC)
 ### <ins>Key Learnings:
 MOSFET as a switch:
 
 OFF resistance is infinite when ∣𝑉𝐺𝑆∣<∣𝑉𝑇∣
 ON resistance is finite when ∣𝑉𝐺𝑆∣>∣𝑉𝑇∣
+
+![WhatsApp Image 2025-09-02 at 17 27 23_f630099e](https://github.com/user-attachments/assets/160738ca-d90b-44c4-81a1-45266e91bb7f)
+
+Figure 7: CMOS inverter circuit diagram
+
+Where,
+- G = Gate
+- S = Source
+- D = Drain
+
+### By observation:
+- For the NMOS voltage equations
+
+  <img width="156" height="95" alt="image" src="https://github.com/user-attachments/assets/89c8d4ee-1ae4-4da6-b48e-50b3e291aa72" />
+
+- For the PMOS voltage equations
+
+  <img width="213" height="91" alt="image" src="https://github.com/user-attachments/assets/0b1dd3e7-ca7a-4cea-83be-894ebd41028a" />
+
+- For the relationship between the currents IdsN and IdsP
+
+  <img width="148" height="40" alt="image" src="https://github.com/user-attachments/assets/ea32d0dd-c8b3-4388-8a07-d8c013001f79" />
 
 Operation of CMOS inverter:
 
@@ -320,21 +352,61 @@ PMOS OFF, NMOS ON → 𝑉𝑂𝑈𝑇=0𝑉
 When 𝑉𝐼𝑁=0𝑉
 - PMOS ON, NMOS OFF → 𝑉𝑂𝑈𝑇=𝑉𝐷𝐷
 	​
+![WhatsApp Image 2025-09-02 at 17 27 23_21bd4826](https://github.com/user-attachments/assets/61eedcd7-3410-4596-9d27-9c7cd05b9b71)
 
+Figures 8: Load curve of NMOS transistor
 
-Voltage relations for NMOS and PMOS were derived and compared.
+![WhatsApp Image 2025-09-02 at 17 27 23_8c0cc56f](https://github.com/user-attachments/assets/e2891329-8d0b-42a2-9943-3cd3f2bd883b)
+
+Figures 9: Plot IdsP vs VdsP of PMOS transistor
+
+![WhatsApp Image 2025-09-02 at 17 27 24_0a178789](https://github.com/user-attachments/assets/6ca7cc5e-8c14-46a3-afd2-9fd9ae2b683c)
+
+Figure 10: Plot IdsN vs VdsP of PMOS transistor obtained by equating IdsP = -IdsN
+
+![WhatsApp Image 2025-09-02 at 17 27 24_a14d7abb](https://github.com/user-attachments/assets/4db253e4-b8d8-4b37-9617-c51e4d8d3e91)
+
+Figures 11: Load curve of PMOS transistor obtained by the voltage equation Vout = Vdd + VdsP
 
 Load curves of PMOS and NMOS were superimposed to generate the CMOS inverter transfer characteristics.
-Figures:
 
-Figure 13: CMOS inverter circuit diagram
+![WhatsApp Image 2025-09-02 at 17 27 24_7478538a](https://github.com/user-attachments/assets/5bee62f1-6021-4b21-9e9e-dd41272bed87)
 
-Figures 14 & 15: Load curves of PMOS and NMOS
+Figure 12: Superimposed load curves 
+This plot shows *IdsN* vs 𝑉𝑜𝑢𝑡 for different input voltages (𝑉𝑖𝑛)
 
-Figure 16: Superimposed load curves
+### Observations from the above graph:
+1. ### Intersection Points:
+   - The curves of NMOS and PMOS intersect at certain points.
+   - These intersection points represent the operating points of the CMOS inverter for different values of input voltage.
+2. ### At 𝑉𝑖𝑛=0:
+   - PMOS is ON and NMOS is OFF.
+   - Output voltage (𝑉𝑜𝑢𝑡) is pulled high (≈𝑉𝐷𝐷).
+   - 𝐼𝐷𝑛=0.
+4. ### At 𝑉𝑖𝑛=𝑉𝐷𝐷:
+   - NMOS is ON and PMOS is OFF.
+   - Output voltage (𝑉𝑜𝑢𝑡) is pulled low (≈0).
+   - 𝐼𝐷𝑝=0.
+5. ### At Intermediate 𝑉𝑖𝑛 (e.g., 0.5 V, 1 V, 1.5 V):
+   - Both NMOS and PMOS are ON simultaneously.
+   - The drain currents of NMOS and PMOS are equal in magnitude but opposite in direction (𝐼𝐷𝑛+𝐼𝐷𝑝=0).
+   - This region corresponds to the transition region of the CMOS inverter.
+6. ### Switching Threshold (𝑉𝑚):
+   - At around 𝑉𝑖𝑛≈1 V (depending on device sizing), the output voltage rapidly switches.
+   - This is the point where the inverter has maximum gain and both transistors conduct.
+7. ### Shape of Curves:
+   - For lower 𝑉𝑖𝑛, PMOS dominates and pulls the output high.
+   - For higher 𝑉𝑖𝑛, NMOS dominates and pulls the output low.
+   - The smooth transition between high and low output is visible where curves overlap
 
-Figure 17: Plot of 𝑉𝑂𝑈𝑇vs 𝑉𝐼𝑁
+![WhatsApp Image 2025-09-02 at 17 27 25_68a8a7d9](https://github.com/user-attachments/assets/a9dbd32d-1385-44d5-82b2-1aa1e9a5b77d)
 
+Figure 13: Plot of 𝑉𝑂𝑈𝑇 vs 𝑉𝐼𝑁
+
+### Observations:
+- The CMOS inverter provides a sharp transition from high output to low output as input crosses the switching threshold.
+- In the transition region, both NMOS and PMOS conduct simultaneously, ensuring symmetrical switching behavior.
+- This characteristic confirms the noise margin and robust logic levels of CMOS inverters.
 
 # Day 3: CMOS switching threshold and dynamic simulations
 On the third day of the workshop, the focus was on the Voltage Transfer Characteristics (VTC) of the CMOS inverter and how it defines the inverter’s switching behavior. The concept of switching threshold voltage (Vm) was studied, along with how the PMOS and NMOS transistors operate in different regions depending on the applied input voltage. We also learned how the shape of the VTC is influenced by transistor sizing ratios (Wp/Lp vs Wn/Ln), which in turn affects noise margins and the robustness of the inverter design.
@@ -346,7 +418,8 @@ What was learnt:
 - At any given input voltage (Vin), the operating regions of NMOS and PMOS can be identified (cut-off, linear, or saturation).
 
 ![WhatsApp Image 2025-09-02 at 09 59 44_ab56f880](https://github.com/user-attachments/assets/283a410f-69ff-48b1-ab4d-00b1006d70b4)
-Figure : The snapshot SPICE netlist considered
+
+Figure 14 : The snapshot SPICE netlist considered
 
 The SPICE DECK for the above figure
 ```
@@ -401,6 +474,10 @@ display
 
 .end
 ```
+
+
+Figure 15: Snapshot of VTC curve of CMOS inverter
+
 Key regions of the VTC:
 - Vin = 0V: NMOS is OFF, PMOS is ON → Vout ≈ Vdd.
 - Vin = Vdd: NMOS is ON, PMOS is OFF → Vout ≈ 0V.
@@ -743,6 +820,5 @@ The hands-on lab activities were especially valuable, as the plots and simulatio
 - Skywater Technology Foundry, SKY130 PDK Documentation – https://skywater-pdk.readthedocs.io
 - Sedra & Smith, Microelectronic Circuits, Oxford University Press.
 - Rabaey, Chandrakasan & Nikolic, Digital Integrated Circuits: A Design Perspective, Pearson Education.
-- Workshop GitHub Repository: VrushabhDamle, sky130CircuitDesignWorkshop (Archived, 2022).
 - Ngspice Official Documentation – http://ngspice.sourceforge.net/docs.html
 - https://www.vlsisystemdesign.com/
