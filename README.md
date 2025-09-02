@@ -476,6 +476,8 @@ Solving the above equation for Vm,
 
 <img width="342" height="147" alt="image" src="https://github.com/user-attachments/assets/bba41215-613d-4f80-bc37-ef2e584d23d9" />
 
+Therefore,
+
 <img width="627" height="405" alt="image" src="https://github.com/user-attachments/assets/79974dd0-9aa4-4a1a-891c-735eccf85b13" />
 
 where,
