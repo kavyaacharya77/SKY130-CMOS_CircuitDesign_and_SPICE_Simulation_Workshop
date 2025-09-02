@@ -475,8 +475,9 @@ display
 .end
 ```
 
+<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/e8e9a1aa-c230-4ed4-8024-ae7a0db4271b" />
 
-Figure 15: Snapshot of VTC curve of CMOS inverter
+Figure 15: Snapshot of VTC curve of the CMOS inverter
 
 Key regions of the VTC:
 - Vin = 0V: NMOS is OFF, PMOS is ON → Vout ≈ Vdd.
@@ -517,6 +518,23 @@ run
 .end
 ```
 
+<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/3f9bd431-b442-488d-9314-8b26c39d3a1b" />
+
+Figure 16: Snapshot of output window showing the transient analysis of the CMOS inverter
+
+### Observation from Transient Analysis of CMOS Inverter:
+- The blue waveform represents the input voltage (Vin), which is a periodic square wave switching between 0 V and 1.8 V.
+- The red waveform represents the output voltage (Vout) of the inverter.
+1. When 𝑉𝑖𝑛=0𝑉:
+   - NMOS is OFF, PMOS is ON.
+   - Output is pulled HIGH → 𝑉𝑜𝑢𝑡≈1.8𝑉
+2. When 𝑉𝑖𝑛=1.8V:
+   - NMOS is ON, PMOS is OFF.
+   - Output is pulled LOW → 𝑉𝑜𝑢𝑡≈0𝑉
+3. During input transitions (0 → 1.8 V or 1.8 V → 0):
+   - Both NMOS and PMOS briefly conduct.
+   - This results in a sharp inversion of the signal, with some finite rise time and fall time observed in the output.
+   
 # Part 2: Static Behavior Evaluation - CMOS Inverter Robustness: Switching threshold
 ### <ins>Key Learnings:
 - CMOS inverter is a robust device because the shape of it's input versus output curve remains the same for all different values of (W/L) ratios.
@@ -543,7 +561,7 @@ Here, 𝑊𝑝 and 𝐿𝑝 denote the width and length of the PMOS transistor c
 
 - Drain Current Equations (ignoring channel-length modulation):
 
-  <img width="394" height="133" alt="image" src="https://github.com/user-attachments/assets/8ba633c6-8b67-4e9d-9939-9db48c45a98e" />
+<img width="394" height="133" alt="image" src="https://github.com/user-attachments/assets/8ba633c6-8b67-4e9d-9939-9db48c45a98e" />
 
 Since IdsP + IdsN = 0, the equation becomes:
 
@@ -575,21 +593,15 @@ Adjusting the PMOS dimensions with respect to the NMOS dimensions led us to the 
 
 ![WhatsApp Image 2025-09-02 at 09 36 37_11545aec](https://github.com/user-attachments/assets/64aad4c2-9ec4-4dab-8581-531d880c22b2)
 
-Simulation Observations:
-
-- The VTC curve showed three distinct regions:
-  - High Output Region (Vin low, Vout ≈ Vdd).
-  - Transition Region (Vin ≈ Vm, both transistors conducting).
-  - Low Output Region (Vin high, Vout ≈ 0V).
-
-- The sharp transition around Vm indicates strong inverter behavior.
-- By changing the ratio (Wp/Lp) / (Wn/Ln), the Vm shifted, showing how sizing affects symmetry and switching speed.
-
-- Figures
-
-  - Figure 18: CMOS Inverter Circuit.
-  - Figure 19: VTC Curve (Vout vs Vin).
-  - Figure 20: Effect of sizing ratio on VTC.
+### Observations from the above table:
+1. For equal sizing of PMOS and NMOS (𝑊𝑝/𝐿𝑝=𝑊𝑛/𝐿𝑛), the rise delay (148 ps) is much higher than the fall delay (71 ps).
+   - This shows that the PMOS is weaker than the NMOS in driving the load.
+2. As the NMOS width increases (2×, 3×, 4×, 5×):
+   - Rise delay decreases significantly (148 ps → 37 ps).
+   - Fall delay increases gradually (71 ps → 88 ps).
+3. The switching threshold voltage (𝑉𝑚) shifts upward from 0.99 V to 1.4 V as NMOS width increases.
+4. At higher NMOS sizing, the inverter becomes NMOS dominated, causing faster pull-down but slower pull-up transitions.
+5. Around 2–3× NMOS sizing, the rise and fall delays become more balanced, giving an almost symmetric response.
 
 # Day 4: CMOS Noise Margin Robustness Evaluation 
 On the fourth day of the workshop, the focus was on understanding the robustness of CMOS inverters in terms of noise margins. We studied the concepts of V_OH, V_IH, V_IL, and V_OL, which define the valid logic levels of digital circuits, and learned how these values determine the reliability of an inverter under noisy conditions. The equations for Noise Margin High (NM_H) and Noise Margin Low (NM_L) were derived in terms of these voltage levels, providing a theoretical basis for analyzing circuit stability. 
@@ -597,28 +609,38 @@ On the fourth day of the workshop, the focus was on understanding the robustness
 
 # Part 1: Static Behavior Evaluation - CMOS Inverter Robustness: Noise Margin
 ### <ins>Key Learnings:
-VOH (Output High Voltage): Maximum output voltage interpreted as logic HIGH.
+- The ideal and actual Input-Output characteristics of an inverter were observed.
 
-VOL (Output Low Voltage): Maximum output voltage interpreted as logic LOW.
+![WhatsApp Image 2025-09-02 at 20 00 43_d84d056c](https://github.com/user-attachments/assets/fdc71f0c-814b-4ec7-bb7b-9d4127c360ef)
 
-VIH (Input High Voltage): Minimum input voltage recognized as logic HIGH.
+Figure 17: Plot showing ideal and actual input-output characteristics of an inverter.
 
-VIL (Input Low Voltage): Maximum input voltage recognized as logic LOW.
+![WhatsApp Image 2025-09-02 at 20 00 43_c1ad3465](https://github.com/user-attachments/assets/88a4fa00-29f6-4017-9037-2313f9c4d079)
+
+Figure 18: Input-Output characteristics plotted on scale
+
+![WhatsApp Image 2025-09-02 at 20 00 43_d453f790](https://github.com/user-attachments/assets/0334dfe3-f061-4092-b5cb-2ef9d3042673)
+
+Figure 19: Plot of Noise induced bup characteristics at different noise amrgin levels 
+
+From the above plot:
+- (a): Bump height lies between Vol and Vil. Will be considered as logic '0'.
+- (b): Bump height lies between Vil and Vih. Output logic 'undefined'.
+- (c): Bump height lies between Vih and Voh. Will be considered as logic '1'.
+- VOH (Output High Voltage): Maximum output voltage interpreted as logic HIGH.
+- VOL (Output Low Voltage): Maximum output voltage interpreted as logic LOW.
+- VIH (Input High Voltage): Minimum input voltage recognized as logic HIGH.
+- VIL (Input Low Voltage): Maximum input voltage recognized as logic LOW.
 
 Noise Margins:
-
-Noise Margin High (NMH):𝑁𝑀𝐻=𝑉𝑂𝐻−𝑉𝐼𝐻
-
-
-Noise Margin Low (NML):𝑁𝑀𝐿=𝑉𝐼𝐿−𝑉𝑂𝐿
+- Noise Margin High (NMH): 𝑁𝑀𝐻=𝑉𝑂𝐻−𝑉𝐼𝐻
+- Noise Margin Low (NML): 𝑁𝑀𝐿=𝑉𝐼𝐿−𝑉𝑂𝐿
 
 Importance:
-
 - Larger noise margins → inverter is more immune to disturbances.
-
 - Balanced CMOS inverters (Wp/Lp ≈ 2–3 × Wn/Ln) give nearly equal NMH and NML.
 
-Part 2: Lab Activity – Noise Margin Calculation
+### Lab Activity – Noise Margin Calculation
 
 SPICE Netlist for Noise Margin Simulation:
 ```
@@ -652,6 +674,11 @@ display
 
 .end
 ```
+
+<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/b156aece-8ef3-4f50-926e-f0650016031d" />
+
+Figure 20: Snapshot of output window showing VTC curve at different noise margins.
+
 Simulation Observations:
 - The VTC curve was plotted and the slopes at transition points gave VIL and VIH.
 - By extracting values from the plot:
@@ -665,12 +692,6 @@ Noise Margins obtained:
 - NML = VIL – VOL ≈ 0.6 V
 
 This showed that the inverter was robust with balanced noise margins.
-
-Figures
-
-- Figure 21: CMOS Inverter Circuit for Noise Margin Test.
-- Figure 22: VTC Curve with VIL and VIH markings.
-- Figure 23: Noise Margin High (NMH) and Noise Margin Low (NML) representation.
 
 # Day 5: CMOS Power supply and device variation robustness evaluation 
 On the final day of the workshop, we explored how supply voltage variations and manufacturing processes like etching and oxide thickness influence CMOS device performance. We studied the differences between strong and weak transistors (PMOS and NMOS) and observed how inverter behavior changes when moving from Weak PMOS–Strong NMOS to Strong PMOS–Weak NMOS. These experiments helped us understand the practical challenges of circuit design, such as gain variation, device mismatch, and the trade-offs between speed, power, and stability.
@@ -689,7 +710,7 @@ Decreasing VDD:
 - Reduces Noise Margins.
 - Saves power but increases delay and reduces robustness.
 
-Lab Activity:
+### Lab Activity:
 To analyze the power supply scaling, the followed code is used.
 ```
 *Model Description
@@ -726,6 +747,11 @@ plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in dc6.o
 
 .end
 ```
+
+<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/2e650c20-cbb1-41f3-bbb2-6d7a259ec605" />
+
+Figure 21: Snapshot of output window to observe power supply variations
+
 - A CMOS inverter was simulated with VDD varied from 1.0 V to 2.0 V in steps.
 - For each value of VDD, the inverter VTC was plotted.
 - VOH, VOL, VIH, and VIL were extracted and Noise Margins calculated.
@@ -758,7 +784,7 @@ Observations:
   - Both rise and fall times are symmetric.
   - Provides maximum robustness against noise.
 
-Lab Activity:
+### Lab Activity:
 The following code is used to perform the lab simulation for the device variations:
 ```
 *Model Description
@@ -791,6 +817,11 @@ display
 
 .end
 ```
+
+<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/ef639938-c7ac-45e1-a1d2-af01ed34617e" />
+
+Figure 22: Snapshot of output window to observe device variations
+
 - CMOS inverters were simulated with three different device strength configurations:
   - Strong NMOS / Weak PMOS
   - Strong PMOS / Weak NMOS
@@ -802,12 +833,6 @@ Observations:
 - When NMOS was stronger, the inverter output pulled down quickly, but high-level noise immunity reduced.
 - When PMOS was stronger, the inverter pulled up quickly, but low-level noise immunity reduced.
 - Balanced sizing provided the best trade-off with a stable Vm ≈ VDD/2 and symmetric noise margins.
-
-Figures
-- Figure 24: VTC curves for CMOS inverter at different VDD values.
-- Figure 25: VTC of inverter with Strong NMOS / Weak PMOS.
-- Figure 26: VTC of inverter with Strong PMOS / Weak NMOS.
-- Figure 27: Comparative plot showing the effect of strength imbalance.
 
 # Conclusion
 During the course of this workshop, I was able to gain a deeper understanding of MOSFET operation and CMOS inverter design. I explored how the characteristics of an inverter can be modified through device sizing, power supply variation, and transistor strength adjustments. I also learned to create and analyze SPICE decks from netlists, and perform simulations that closely reflect real-world circuit behavior.
