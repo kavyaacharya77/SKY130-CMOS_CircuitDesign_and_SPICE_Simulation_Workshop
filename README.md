@@ -235,7 +235,36 @@ On the second day of the workshop, we explored advanced concepts of MOSFET devic
   - Short channel (<250nm): Cut-off, Resistive, Velocity Saturation, Saturation.
  
 ### Lab Activity
-- A SPICE simulation was carried out using the sky130 PDK to plot Ids vs Vds for short-channel devices.
+In order to analyze the 𝐼𝐷𝑆–𝑉𝐷𝑆 behavior of short-channel devices, the SPICE code shown below is used.
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=0.39 l=0.15
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vdd 0 1.8 0.1 Vin 0 1.8 0.2
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+```
 - Threshold voltage was extracted from the Ids–Vgs curve by extending the linear portion of the graph and finding the x-intercept.
 
 Figures:
@@ -243,6 +272,36 @@ Figures:
 - Figure 7: Regions of NMOS operation
 - Figure 8: Velocity saturation effect graph
 - Figures 9–12: Snapshots of SPICE terminal and plot windows for Ids–Vds and Ids–Vgs
+
+To calculate the threshold voltage from *IDS VS VGS* curve, the SPICE code shown below is used.
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=0.39 l=0.15
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vin 0 1.8 0.1
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+```
 
 # Part 2: CMOS voltage transfer characteristics (VTC)
 ### <ins>Key Learnings:
@@ -283,28 +342,79 @@ On the third day of the workshop, the focus was on the Voltage Transfer Characte
 # Part 1: Voltage transfer characteristics and SPICE simulations
 ### <ins>Key Learnings:
 What was learnt:
+- A CMOS inverter consists of one NMOS and one PMOS connected in series.
+- At any given input voltage (Vin), the operating regions of NMOS and PMOS can be identified (cut-off, linear, or saturation).
 
-A CMOS inverter consists of one NMOS and one PMOS connected in series.
+The Voltage Transfer Characteristic (VTC) curve is obtained by plotting Vout vs Vin.The following code is used to obtain the same:
+```
+*Model Description
+.param temp=27
 
-At any given input voltage (Vin), the operating regions of NMOS and PMOS can be identified (cut-off, linear, or saturation).
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
 
-The Voltage Transfer Characteristic (VTC) curve is obtained by plotting Vout vs Vin.
+*Netlist Description
 
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
 Key regions of the VTC:
-
-Vin = 0V: NMOS is OFF, PMOS is ON → Vout ≈ Vdd.
-
-Vin = Vdd: NMOS is ON, PMOS is OFF → Vout ≈ 0V.
-
-Vin ≈ Vm (threshold point): Both NMOS and PMOS conduct → inverter switches.
+- Vin = 0V: NMOS is OFF, PMOS is ON → Vout ≈ Vdd.
+- Vin = Vdd: NMOS is ON, PMOS is OFF → Vout ≈ 0V.
+- Vin ≈ Vm (threshold point): Both NMOS and PMOS conduct → inverter switches.
 
 Switching Threshold (Vm):
+- Defined as the point where NMOS current = PMOS current.
+- A balanced inverter typically has Vm ≈ Vdd/2.
+- Vm depends on the sizing ratio (Wp/Lp vs Wn/Ln).
 
-Defined as the point where NMOS current = PMOS current.
+To perform the transient analysis, the following code is needed:
+```
+*Model Description
+.param temp=27
 
-A balanced inverter typically has Vm ≈ Vdd/2.
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
 
-Vm depends on the sizing ratio (Wp/Lp vs Wn/Ln).
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 PULSE(0V 1.8V 0 0.1ns 0.1ns 2ns 4ns)
+
+*simulation commands
+
+.tran 1n 10n
+
+.control
+run
+.endc
+
+.end
+```
 
 # Part 2: Static Behavior Evaluation - CMOS Inverter Robustness: Switching threshold
 ### <ins>Key Learnings:
@@ -381,47 +491,48 @@ Importance:
 Part 2: Lab Activity – Noise Margin Calculation
 
 SPICE Netlist for Noise Margin Simulation:
-* CMOS Inverter Noise Margin Analysis
+```
+*Model Description
 .param temp=27
+
+*Including sky130 library files
 .lib "sky130_fd_pr/models/sky130.lib.spice" tt
 
-* Transistor sizing
-XM1 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.42u l=0.15u
-XM2 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1.16u l=0.15u   *Wp/Lp = 2.77 * Wn/Ln
+*Netlist Description
 
-* Power supply
-Vdd vdd 0 1.8
-Vin in 0 0
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
 
-* Simulation command
-.dc Vin 0 1.8 0.01
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
 .op
+
+.dc Vin 0 1.8 0.01
 
 .control
 run
-plot v(out) vs v(in)
+setplot dc1
+display
 .endc
 
 .end
+```
 Simulation Observations:
-
-The VTC curve was plotted and the slopes at transition points gave VIL and VIH.
-
-By extracting values from the plot:
-
-VOH ≈ 1.8 V
-
-VOL ≈ 0 V
-
-VIL ≈ ~0.6 V
-
-VIH ≈ ~1.2 V
+- The VTC curve was plotted and the slopes at transition points gave VIL and VIH.
+- By extracting values from the plot:
+  - VOH ≈ 1.8 V
+  - VOL ≈ 0 V
+  - VIL ≈ ~0.6 V
+  - VIH ≈ ~1.2 V
 
 Noise Margins obtained:
-
-NMH = VOH – VIH ≈ 0.6 V
-
-NML = VIL – VOL ≈ 0.6 V
+- NMH = VOH – VIH ≈ 0.6 V
+- NML = VIL – VOL ≈ 0.6 V
 
 This showed that the inverter was robust with balanced noise margins.
 
@@ -449,6 +560,42 @@ Decreasing VDD:
 - Saves power but increases delay and reduces robustness.
 
 Lab Activity:
+To analyze the power supply scaling, the followed code is used.
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+.control
+
+let powersupply = 1.8
+alter Vdd = powersupply
+        let voltagesupplyvariation = 0
+        dowhile voltagesupplyvariation < 6
+        dc Vin 0 1.8 0.01
+        let powersupply = powersupply - 0.2
+        alter Vdd = powersupply
+        let voltagesupplyvariation = voltagesupplyvariation + 1
+      end
+
+plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in dc6.out vs in xlabel "input voltage(V)" ylabel "output voltage(V)" title "Inveter dc characteristics as a function of supply voltage"
+
+.endc
+
+.end
+```
 - A CMOS inverter was simulated with VDD varied from 1.0 V to 2.0 V in steps.
 - For each value of VDD, the inverter VTC was plotted.
 - VOH, VOL, VIH, and VIL were extracted and Noise Margins calculated.
@@ -482,7 +629,38 @@ Observations:
   - Provides maximum robustness against noise.
 
 Lab Activity:
+The following code is used to perform the lab simulation for the device variations:
+```
+*Model Description
+.param temp=27
 
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=7 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.42 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
 - CMOS inverters were simulated with three different device strength configurations:
   - Strong NMOS / Weak PMOS
   - Strong PMOS / Weak NMOS
@@ -514,3 +692,4 @@ The hands-on lab activities were especially valuable, as the plots and simulatio
 - Rabaey, Chandrakasan & Nikolic, Digital Integrated Circuits: A Design Perspective, Pearson Education.
 - Workshop GitHub Repository: VrushabhDamle, sky130CircuitDesignWorkshop (Archived, 2022).
 - Ngspice Official Documentation – http://ngspice.sourceforge.net/docs.html
+- https://www.vlsisystemdesign.com/
