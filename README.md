@@ -345,6 +345,30 @@ What was learnt:
 - A CMOS inverter consists of one NMOS and one PMOS connected in series.
 - At any given input voltage (Vin), the operating regions of NMOS and PMOS can be identified (cut-off, linear, or saturation).
 
+![WhatsApp Image 2025-09-02 at 09 59 44_ab56f880](https://github.com/user-attachments/assets/283a410f-69ff-48b1-ab4d-00b1006d70b4)
+Figure : The snapshot SPICE netlist considered
+
+The SPICE DECK for the above figure
+```
+***MODEL Description***
+***NETLIST Description***
+M1 out in vdd vdd pmos W=0.375u L=0.25u
+M2 out in  0   0  nmos W=0.375u L=0.25u
+
+cload out 0 10f
+
+Vdd vdd 0 2.5
+Vin  in 0 2.5
+
+***SIMULATION Commands***
+.op
+.dc Vin 0 2.5 0.05
+
+***.include tsmc_025um_model.mod***
+.LIB "tsmc_025um_model.mod" CMOS_MODELS
+.end
+```
+
 The Voltage Transfer Characteristic (VTC) curve is obtained by plotting Vout vs Vin.The following code is used to obtain the same:
 ```
 *Model Description
@@ -418,33 +442,60 @@ run
 
 # Part 2: Static Behavior Evaluation - CMOS Inverter Robustness: Switching threshold
 ### <ins>Key Learnings:
-part 2: Lab Activity – CMOS Inverter Simulation
-*Model Description
-.param temp=27
+- CMOS inverter is a robust device because the shape of it's input versus output curve remains the same for all different values of (W/L) ratios.
+- Static Behavior Evaluation: CMOS Inverter Robustness
+  - Switching Threshold
+  - Noise Margin
+  - Power Supply Variation
+  - Device Variation
+- Switching Threshold Voltage (𝑉𝑚) of CMOS Inverter:
+  - The switching threshold voltage 𝑉𝑚 is the point where the input voltage equals the output voltage (𝑉𝑖𝑛=𝑉𝑜𝑢𝑡).
+  - Graphical Method:
+    To determine 𝑉𝑚, a 45° line (𝑉𝑖𝑛=𝑉𝑜𝑢𝑡) is drawn across the voltage transfer characteristic (VTC) curve of the CMOS inverter. The x-coordinate of the intersection between this line and the inverter’s transfer curve gives the switching threshold.
 
-*Include SKY130 library
-.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+	For example:
 
-*Netlist Description
-XM1 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.42u l=0.15u
-XM2 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1.26u l=0.15u
+- When 𝑊𝑝/𝐿𝑝=1.5, 𝑉𝑚≈0.98V.
+- When 𝑊𝑝/𝐿𝑝=3.75, 𝑉𝑚≈1.2 V
 
-Vdd vdd 0 1.8V
-Vin in 0 0V
+Here, 𝑊𝑝 and 𝐿𝑝 denote the width and length of the PMOS transistor channel.
 
-*Simulation commands
-.dc Vin 0 1.8 0.01
-.op
+- Device Operation at 𝑉𝑚:
+  - At 𝑉𝑚, both the NMOS and PMOS devices are in conduction because their gate-to-source voltages (𝑉𝐺𝑆) are close to their respective threshold voltages. Thus: Vgs = Vds.
+  - The drain currents satisfy the condition: IdsP + IdsN = 0 which implies IdsP = - IdsN.
 
-.control
-run
-plot v(out) vs v(in)
-.endc
+- Drain Current Equations (ignoring channel-length modulation):
 
-.end
+  <img width="394" height="133" alt="image" src="https://github.com/user-attachments/assets/8ba633c6-8b67-4e9d-9939-9db48c45a98e" />
 
+Since IdsP + IdsN = 0, the equation becomes:
 
-SPICE Netlist for CMOS Inverter VTC:
+<img width="632" height="67" alt="image" src="https://github.com/user-attachments/assets/d4b8fa86-c5f3-407f-bdd8-edeb978de109" />
+
+Solving the above equation for Vm,
+
+<img width="342" height="147" alt="image" src="https://github.com/user-attachments/assets/bba41215-613d-4f80-bc37-ef2e584d23d9" />
+
+<img width="627" height="405" alt="image" src="https://github.com/user-attachments/assets/79974dd0-9aa4-4a1a-891c-735eccf85b13" />
+
+where,
+
+- Wp is the width of the channel in PMOS
+- Lp is the length of the channel in PMOS
+- Wn is the width of the channel in NMOS
+- Ln is the length of the channel in NMOS
+- kn' is the process transconductance of the NMOS
+- kp' is the process transconductance of the PMOS
+- Vdsatn is the Vdsat of the NMOS
+- Vdsatp is the Vdsat of the PMOS
+- Vm is the switching threshold voltage
+- Vt is the threshold voltage
+- Vdd is the supply voltage
+
+Adjusting the PMOS dimensions with respect to the NMOS dimensions led us to the following observations.
+
+![WhatsApp Image 2025-09-02 at 09 36 37_11545aec](https://github.com/user-attachments/assets/64aad4c2-9ec4-4dab-8581-531d880c22b2)
+
 Simulation Observations:
 
 - The VTC curve showed three distinct regions:
