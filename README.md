@@ -301,7 +301,7 @@ setplot dc1
 .end
 ```
 
-<img width="1920" height="1028" alt="image" src="https://github.com/user-attachments/assets/3c259e3d-17f3-4e49-aa3f-96041f35e544" />
+![WhatsApp Image 2025-09-05 at 19 29 53_ffe6586b](https://github.com/user-attachments/assets/0e71025d-5c76-469c-a3cd-7c785b52d200)
 
 Figure 6: Snapshot of plot window showing Ids vs Vgs curve
 
@@ -469,7 +469,7 @@ display
 .end
 ```
 
-<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/e8e9a1aa-c230-4ed4-8024-ae7a0db4271b" />
+![WhatsApp Image 2025-09-05 at 19 29 31_27a694e5](https://github.com/user-attachments/assets/73f86de5-2172-4bc6-9379-2800437c98cf)
 
 Figure 15: Snapshot of VTC curve of the CMOS inverter
 
@@ -512,7 +512,7 @@ run
 .end
 ```
 
-<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/3f9bd431-b442-488d-9314-8b26c39d3a1b" />
+![WhatsApp Image 2025-09-05 at 19 28 22_e0191f23](https://github.com/user-attachments/assets/a540d192-ddb2-47f8-ad16-80cc6274ed76)
 
 Figure 16: Snapshot of output window showing the transient analysis of the CMOS inverter
 
@@ -635,7 +635,7 @@ display
 .end
 ```
 
-<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/b156aece-8ef3-4f50-926e-f0650016031d" />
+![WhatsApp Image 2025-09-05 at 19 28 07_9ef122c7](https://github.com/user-attachments/assets/31eb6233-67b1-4337-8e7a-b61b03db0c8d)
 
 Figure 20: Snapshot of output window showing VTC curve at different noise margins.
 
@@ -708,7 +708,7 @@ plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in dc6.o
 .end
 ```
 
-<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/2e650c20-cbb1-41f3-bbb2-6d7a259ec605" />
+![WhatsApp Image 2025-09-05 at 19 29 38_a4f8d196](https://github.com/user-attachments/assets/08481427-39a3-419b-a9ba-a2a96fdd6c9c)
 
 Figure 21: Snapshot of output window to observe power supply variations
 
@@ -778,7 +778,7 @@ display
 .end
 ```
 
-<img width="1920" height="1029" alt="image" src="https://github.com/user-attachments/assets/ef639938-c7ac-45e1-a1d2-af01ed34617e" />
+![WhatsApp Image 2025-09-05 at 19 29 31_260211b2](https://github.com/user-attachments/assets/05efcd51-1233-46d1-9916-0f812714004e)
 
 Figure 22: Snapshot of output window to observe device variations
 
