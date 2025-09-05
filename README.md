@@ -263,7 +263,7 @@ setplot dc1
 .end
 ```
 
-<img width="1920" height="1031" alt="image" src="https://github.com/user-attachments/assets/54f61217-eb9a-4972-9413-5a02f4759eee" />
+![WhatsApp Image 2025-09-05 at 19 28 35_f3ee9741](https://github.com/user-attachments/assets/87adaae7-7258-455e-87da-f6af5db018bb)
 
 Figure 4: Snapshot of plot window for Ids Vs Vds of short channel device
 
