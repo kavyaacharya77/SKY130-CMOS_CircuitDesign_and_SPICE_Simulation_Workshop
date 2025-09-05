@@ -152,7 +152,6 @@ where:
 
 ### <ins>SPICE setup
 ### 1. Netlist for NMOS
-A simple NMOS device shown in Figure 2 was simulated using SPICE.
 
 ![WhatsApp Image 2025-08-25 at 23 46 47_2c04e9d6](https://github.com/user-attachments/assets/f3d42c49-f531-4a6f-9e9c-3fe2f644d8f1)
 
@@ -209,7 +208,7 @@ Notes:
 - Different process corners influence device behavior significantly.
 - Practical transistor characteristics can be observed directly from simulation curves.
 
-<img width="1920" height="1030" alt="image" src="https://github.com/user-attachments/assets/53867093-2ac4-4701-9fc7-4d7aef87020f" />
+<img width="656" height="609" alt="1" src="https://github.com/user-attachments/assets/12a823d4-efc6-4ef3-8b2b-579ab43dbe8a" />
 
 Figure 3: Snapshot of output window of the Day 1 lab activity 
 
