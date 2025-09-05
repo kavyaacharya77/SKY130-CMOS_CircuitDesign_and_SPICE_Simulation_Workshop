@@ -134,7 +134,7 @@ In reality, the drain current still slightly increases with 𝑉𝐷S because th
 
 In this case, the Drain current ID equation becomes:
 
-
+*ID = 0.5 * unCox(W/L)(VGS-Vth)^2(1+ 𝜆VDS)*
 
 This effect is modeled by multiplying with the factor: (1+𝜆𝑉𝐷𝑆).
 
