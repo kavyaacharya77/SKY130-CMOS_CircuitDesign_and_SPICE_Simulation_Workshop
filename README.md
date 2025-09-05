@@ -268,7 +268,7 @@ setplot dc1
 
 Figure 4: Snapshot of plot window for Ids Vs Vds of short channel device
 
-<img width="799" height="491" alt="image" src="https://github.com/user-attachments/assets/56cf74e1-f9e7-4e26-a1b0-94c81e165e35" />
+<img width="187" height="187" alt="image" src="https://github.com/user-attachments/assets/f469e5c4-4798-429a-993c-dec7e884c7f3" />
 
 Figure 5: Velocity saturation effect graph
 
@@ -326,16 +326,16 @@ Where,
 
 ### By observation:
 - For the NMOS voltage equations
-
-  <img width="156" height="95" alt="image" src="https://github.com/user-attachments/assets/89c8d4ee-1ae4-4da6-b48e-50b3e291aa72" />
+  - VgsN = VIN
+  - VdsN = VOUT
 
 - For the PMOS voltage equations
-
-  <img width="213" height="91" alt="image" src="https://github.com/user-attachments/assets/0b1dd3e7-ca7a-4cea-83be-894ebd41028a" />
+  - VgsP = VIN - VDD
+  - VdsP = VOUT - VDD
 
 - For the relationship between the currents IdsN and IdsP
 
-  <img width="148" height="40" alt="image" src="https://github.com/user-attachments/assets/ea32d0dd-c8b3-4388-8a07-d8c013001f79" />
+  IdsP = -IdsN
 
 Operation of CMOS inverter:
 
