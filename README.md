@@ -57,8 +57,7 @@ Applying a substrate bias (Vsb) increases the required threshold voltage.
 
 ### Threshold Voltage Equation:
   
-  <img width="453" height="66" alt="image" src="https://github.com/user-attachments/assets/8b25ca41-d06e-40c2-b871-0faf19c692c7" />
-
+  VT = VTO + 2 𝜙𝑓 +  𝛾( sqrt{2𝜙𝑓 + VSB} - sqrt{2𝜙𝑓})
 where:
 - *VT0* = Threshold voltage when 
 - 𝑉𝑆𝐵=0
@@ -68,7 +67,7 @@ where:
 
 ### Body Effect Coefficient
   
-  <img width="189" height="83" alt="image" src="https://github.com/user-attachments/assets/98330f1e-d733-4986-a250-b3f414f68fde" />
+ 𝛾 = Sqrt{2q * 𝜀𝑠𝑖* NA}/{Cox}
 
 where:
 - 𝜀𝑠𝑖​ = Permittivity of silicon (=11.7ε0)
@@ -78,8 +77,7 @@ where:
 
 ### Fermi Potential Equation
 
-<img width="242" height="47" alt="image" src="https://github.com/user-attachments/assets/b84ae6d3-4ebb-4b84-ae28-cb574b328352" />
-
+ 𝜙𝑓 = *kT*/*q*(ln(*NA/ni*)
 where:
 - 𝑘 = Boltzmann constant
 - 𝑇 = Absolute temperature (K)
