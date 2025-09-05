@@ -550,40 +550,6 @@ Figure 16: Snapshot of output window showing the transient analysis of the CMOS 
 
 Here, 𝑊𝑝 and 𝐿𝑝 denote the width and length of the PMOS transistor channel.
 
-- Device Operation at 𝑉𝑚:
-  - At 𝑉𝑚, both the NMOS and PMOS devices are in conduction because their gate-to-source voltages (𝑉𝐺𝑆) are close to their respective threshold voltages. Thus: Vgs = Vds.
-  - The drain currents satisfy the condition: IdsP + IdsN = 0 which implies IdsP = - IdsN.
-
-- Drain Current Equations (ignoring channel-length modulation):
-
-<img width="394" height="133" alt="image" src="https://github.com/user-attachments/assets/8ba633c6-8b67-4e9d-9939-9db48c45a98e" />
-
-Since IdsP + IdsN = 0, the equation becomes:
-
-<img width="632" height="67" alt="image" src="https://github.com/user-attachments/assets/d4b8fa86-c5f3-407f-bdd8-edeb978de109" />
-
-Solving the above equation for Vm,
-
-<img width="342" height="147" alt="image" src="https://github.com/user-attachments/assets/bba41215-613d-4f80-bc37-ef2e584d23d9" />
-
-Therefore,
-
-<img width="627" height="405" alt="image" src="https://github.com/user-attachments/assets/79974dd0-9aa4-4a1a-891c-735eccf85b13" />
-
-where,
-
-- Wp is the width of the channel in PMOS
-- Lp is the length of the channel in PMOS
-- Wn is the width of the channel in NMOS
-- Ln is the length of the channel in NMOS
-- kn' is the process transconductance of the NMOS
-- kp' is the process transconductance of the PMOS
-- Vdsatn is the Vdsat of the NMOS
-- Vdsatp is the Vdsat of the PMOS
-- Vm is the switching threshold voltage
-- Vt is the threshold voltage
-- Vdd is the supply voltage
-
 Adjusting the PMOS dimensions with respect to the NMOS dimensions led us to the following observations.
 
 ![WhatsApp Image 2025-09-02 at 09 36 37_11545aec](https://github.com/user-attachments/assets/64aad4c2-9ec4-4dab-8581-531d880c22b2)
