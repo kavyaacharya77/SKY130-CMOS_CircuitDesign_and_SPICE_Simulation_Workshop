@@ -94,14 +94,11 @@ where:
 Let:
 - 𝑉(𝑥) = channel potential at distance 𝑥 along channel length
 - 𝑉𝐺𝑆−𝑉(𝑥) = gate-to-channel voltage at that point
-
-Thus, induced charge at point 𝑥:
-
-<img width="338" height="34" alt="image" src="https://github.com/user-attachments/assets/5b19be93-2451-423d-bab4-87ebdc3e9d94" />
-
+- Q(x) = -C_ox[VGS - Vth - V(x)]
+  
 ### Gate oxide capacitance:
 
-<img width="123" height="65" alt="image" src="https://github.com/user-attachments/assets/098ca971-a21b-42c1-bf87-4f175296ffb7" />
+*Cox* = εox/tox
 
 where:
 - *εox*​ = 3.97ε0​=3.51×10−11F/m
@@ -114,7 +111,7 @@ where:
 
 ### Drift Current
 
-<img width="360" height="65" alt="image" src="https://github.com/user-attachments/assets/d8d5ab17-dab7-405c-8f6b-a47f2c5c97ed" />
+ *ID = μnCoxW/L(VGS−Vth)VDS−1/2(VDS)^2*
 
 where:
 - *μn* = electron mobility
@@ -137,7 +134,7 @@ In reality, the drain current still slightly increases with 𝑉𝐷S because th
 
 In this case, the Drain current ID equation becomes:
 
-<img width="277" height="61" alt="image" src="https://github.com/user-attachments/assets/4684ddd9-aa90-4003-bc67-6b533c984a43" />
+
 
 This effect is modeled by multiplying with the factor: (1+𝜆𝑉𝐷𝑆).
 
