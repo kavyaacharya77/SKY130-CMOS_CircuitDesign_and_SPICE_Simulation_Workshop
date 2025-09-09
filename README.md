@@ -208,6 +208,8 @@ Notes:
 - Different process corners influence device behavior significantly.
 - Practical transistor characteristics can be observed directly from simulation curves.
 
+![WhatsApp Image 2025-09-09 at 08 52 00_32b78db3](https://github.com/user-attachments/assets/f111786f-eb81-4e5e-b1e7-4a533fb0329c)
+
 <img width="656" height="609" alt="1" src="https://github.com/user-attachments/assets/12a823d4-efc6-4ef3-8b2b-579ab43dbe8a" />
 
 Figure 3: Snapshot of output window of the Day 1 lab activity 
@@ -262,6 +264,8 @@ setplot dc1
 
 .end
 ```
+
+![WhatsApp Image 2025-09-09 at 08 51 59_69477fa6](https://github.com/user-attachments/assets/cf0b4232-a8a0-4fe7-8b69-e0f6bddcb94b)
 
 ![WhatsApp Image 2025-09-05 at 19 28 35_f3ee9741](https://github.com/user-attachments/assets/87adaae7-7258-455e-87da-f6af5db018bb)
 
@@ -468,6 +472,8 @@ display
 
 .end
 ```
+
+![WhatsApp Image 2025-09-09 at 08 51 59_05d2585a](https://github.com/user-attachments/assets/6da918e6-1f4c-4da0-a319-a4657ab4a146)
 
 ![WhatsApp Image 2025-09-05 at 19 29 31_27a694e5](https://github.com/user-attachments/assets/73f86de5-2172-4bc6-9379-2800437c98cf)
 
@@ -793,6 +799,8 @@ Observations:
 - When NMOS was stronger, the inverter output pulled down quickly, but high-level noise immunity reduced.
 - When PMOS was stronger, the inverter pulled up quickly, but low-level noise immunity reduced.
 - Balanced sizing provided the best trade-off with a stable Vm ≈ VDD/2 and symmetric noise margins.
+
+### The Day4 and Day 5 terminal snapshots were taken, but due to issues with my Virtual Machine I am currently unable to access and upload them. And my laptop is also facing issues. I will update the repository once I am able to restore them from my system.
 
 # Conclusion
 During the course of this workshop, I was able to gain a deeper understanding of MOSFET operation and CMOS inverter design. I explored how the characteristics of an inverter can be modified through device sizing, power supply variation, and transistor strength adjustments. I also learned to create and analyze SPICE decks from netlists, and perform simulations that closely reflect real-world circuit behavior.
