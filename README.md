@@ -800,7 +800,7 @@ Observations:
 - When PMOS was stronger, the inverter pulled up quickly, but low-level noise immunity reduced.
 - Balanced sizing provided the best trade-off with a stable Vm ≈ VDD/2 and symmetric noise margins.
 
-### The Day4 and Day 5 terminal snapshots were taken, but due to issues with my Virtual Machine I am currently unable to access and upload them. And my laptop is also facing issues. I will update the repository once I am able to restore them from my system.
+#### The Day 4 and Day 5 terminal snapshots were taken, but due to issues with my Virtual Machine I am currently unable to access and upload them. And my laptop is also facing issues. I will update the repository once I am able to restore them from my system.
 
 # Conclusion
 During the course of this workshop, I was able to gain a deeper understanding of MOSFET operation and CMOS inverter design. I explored how the characteristics of an inverter can be modified through device sizing, power supply variation, and transistor strength adjustments. I also learned to create and analyze SPICE decks from netlists, and perform simulations that closely reflect real-world circuit behavior.
